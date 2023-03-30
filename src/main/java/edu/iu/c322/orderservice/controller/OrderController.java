@@ -27,7 +27,7 @@ public class OrderController {
         return repository.create(order);
     }
 
-    // PUT localhost:8080/customers/2
+    // PUT localhost:8080/order/2
     @PutMapping("/{id}")
     public void update(@Valid @RequestBody Order order, @PathVariable int id){
         repository.update(order, id);

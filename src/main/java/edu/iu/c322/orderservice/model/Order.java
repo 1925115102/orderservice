@@ -9,7 +9,6 @@ public class Order {
     private int customerId;
 
     private double total;
-
     private Address shippingAddress;
 
     private List<Item> items;

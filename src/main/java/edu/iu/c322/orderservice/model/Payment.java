@@ -1,9 +1,13 @@
 package edu.iu.c322.orderservice.model;
 
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.Objects;
 
 public class Payment {
+    @NotEmpty(message = "method cannot be empty.")
     private String method;
+    @NotEmpty(message = "number cannot be empty.")
     private String number;
     private Address billingAddress;
 

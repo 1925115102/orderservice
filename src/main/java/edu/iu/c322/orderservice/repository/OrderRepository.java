@@ -11,14 +11,17 @@ public class OrderRepository {
     private List<Order> orders = new ArrayList<>();
 
     public Order findById(int id){
-        return orders.get(id-1);
+        for(Order order: orders){
+            if (order.getCustomerId()==id){
+                return order;
+            }
+        }
+        throw new IllegalStateException("customer id is not valid.");
     }
 
     public int create(Order order){
-        int id = orders.size() + 1;
-        order.setCustomerId(id);
         orders.add(order);
-        return id;
+        return order.getCustomerId();
     }
 
     public void update(Order order, int id){
@@ -29,7 +32,7 @@ public class OrderRepository {
             x.setPayment(order.getPayment());
             x.setShippingAddress(order.getShippingAddress());
         } else {
-            throw new IllegalStateException("order id is not valid.");
+            throw new IllegalStateException("customer id is not valid.");
         }
     }
 
@@ -38,7 +41,7 @@ public class OrderRepository {
         if (x != null){
             orders.remove(x);
         } else {
-            throw new IllegalStateException("order id is not valid.");
+            throw new IllegalStateException("customer id is not valid.");
         }
     }
 

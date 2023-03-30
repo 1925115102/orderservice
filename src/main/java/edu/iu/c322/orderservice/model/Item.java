@@ -1,8 +1,11 @@
 package edu.iu.c322.orderservice.model;
 
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.Objects;
 
 public class Item {
+    @NotEmpty(message = "item name cannot be empty.")
     private String name;
     private int quantity;
     private int price;
