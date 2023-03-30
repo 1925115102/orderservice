@@ -2,12 +2,12 @@ package edu.iu.c322.orderservice.model;
 
 import java.util.Objects;
 
-public class ShippingAddress {
+public class Address {
     private String state;
     private String city;
     private int postalCode;
 
-    public ShippingAddress(String state, String city, int postalCode) {
+    public Address(String state, String city, int postalCode) {
         this.state = state;
         this.city = city;
         this.postalCode = postalCode;
@@ -41,7 +41,7 @@ public class ShippingAddress {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ShippingAddress that = (ShippingAddress) o;
+        Address that = (Address) o;
         return postalCode == that.postalCode && state.equals(that.state) && city.equals(that.city);
     }
 

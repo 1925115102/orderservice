@@ -13,6 +13,6 @@ public class GreetingController {
     // Get https.localhost:8080
     @GetMapping()
     public String greeting(){
-        return "Greetings!";
+        return "Greetings!!";
     }
 }

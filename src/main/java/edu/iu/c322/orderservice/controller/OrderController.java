@@ -17,9 +17,9 @@ public class OrderController {
     }
 
     // Get localhost:8080/orders
-    @GetMapping
-    public List<Order> findAll(){
-        return repository.findAll();
+    @GetMapping("/{id}")
+    public Order findById(@PathVariable int id){
+        return repository.findById(id);
     }
 
     @PostMapping

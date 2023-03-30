@@ -2,20 +2,28 @@ package edu.iu.c322.orderservice.model;
 
 import jakarta.validation.constraints.NotEmpty;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Order {
     private int customerId;
-    @NotEmpty(message = "total cannot be empty.")
-    private float total;
-    @NotEmpty(message = "shipping address cannot be empty.")
-    private ShippingAddress shippingAddress;
-    @NotEmpty(message = "items cannot be empty.")
+
+    private double total;
+
+    private Address shippingAddress;
+
     private List<Item> items;
-    @NotEmpty(message = "payment cannot be empty.")
+
     private Payment payment;
+
+    public Order(int customerId, double total, Address shippingAddress, List<Item> items, Payment payment) {
+        this.customerId = customerId;
+        this.total = total;
+        this.shippingAddress = shippingAddress;
+        this.items = items;
+        this.payment = payment;
+    }
+
     public int getCustomerId() {
         return customerId;
     }
@@ -24,19 +32,19 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public float getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 
-    public ShippingAddress getShippingAddress() {
+    public Address getShippingAddress() {
         return shippingAddress;
     }
 
-    public void setShippingAddress(ShippingAddress shippingAddress) {
+    public void setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
 
@@ -61,7 +69,7 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return customerId == order.customerId && Float.compare(order.total, total) == 0 && shippingAddress.equals(order.shippingAddress) && items.equals(order.items) && payment.equals(order.payment);
+        return customerId == order.customerId && Double.compare(order.total, total) == 0 && shippingAddress.equals(order.shippingAddress) && items.equals(order.items) && payment.equals(order.payment);
     }
 
     @Override

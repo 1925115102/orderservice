@@ -10,8 +10,8 @@ import java.util.List;
 public class OrderRepository {
     private List<Order> orders = new ArrayList<>();
 
-    public List<Order> findAll(){
-        return orders;
+    public Order findById(int id){
+        return orders.get(id-1);
     }
 
     public int create(Order order){

@@ -5,12 +5,12 @@ import java.util.Objects;
 public class Payment {
     private String method;
     private String number;
-    private ShippingAddress shippingAddress;
+    private Address billingAddress;
 
-    public Payment(String method, String number, ShippingAddress shippingAddress) {
+    public Payment(String method, String number, Address billingAddress) {
         this.method = method;
         this.number = number;
-        this.shippingAddress = shippingAddress;
+        this.billingAddress = billingAddress;
     }
 
     public String getMethod() {
@@ -29,12 +29,12 @@ public class Payment {
         this.number = number;
     }
 
-    public ShippingAddress getShippingAddress() {
-        return shippingAddress;
+    public Address getBillingAddress() {
+        return billingAddress;
     }
 
-    public void setShippingAddress(ShippingAddress shippingAddress) {
-        this.shippingAddress = shippingAddress;
+    public void setShippingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
     }
 
     @Override
@@ -42,12 +42,12 @@ public class Payment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return method.equals(payment.method) && number.equals(payment.number) && shippingAddress.equals(payment.shippingAddress);
+        return method.equals(payment.method) && number.equals(payment.number) && billingAddress.equals(payment.billingAddress);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(method, number, shippingAddress);
+        return Objects.hash(method, number, billingAddress);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Payment {
         return "Payment{" +
                 "method='" + method + '\'' +
                 ", number='" + number + '\'' +
-                ", shippingAddress=" + shippingAddress +
+                ", shippingAddress=" + billingAddress +
                 '}';
     }
 }
