@@ -36,8 +36,8 @@ public class OrderController {
        repository.update(returnOrder);
     }
 
-    @DeleteMapping("/return")
-    public void delete(@Valid @RequestBody Return returnOrder){
-        repository.delete(returnOrder);
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id){
+        repository.delete(id);
     }
 }

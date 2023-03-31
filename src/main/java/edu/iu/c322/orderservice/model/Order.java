@@ -17,6 +17,7 @@ public class Order {
     private List<@Valid Item> items;
 
     private @Valid Payment payment;
+    private String status;
 
     public Order(int customerId, double total, Address shippingAddress, List<Item> items, Payment payment) {
         this.customerId = customerId;
@@ -27,6 +28,7 @@ public class Order {
             items.get(i).setId(i+1);
         }
         this.payment = payment;
+        this.status = "ordered";
     }
 
     public int getOrderId() {
@@ -63,6 +65,14 @@ public class Order {
 
     public List<Item> getItems() {
         return items;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setItems(List<Item> itemGroup) {

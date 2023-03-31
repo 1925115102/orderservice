@@ -46,17 +46,10 @@ public class OrderRepository {
 
     }
 
-    public void delete(Return returnOrder){
-        Order order = findById(returnOrder.getOrderId());
-        // Find the item with the given id and mark it as returned
-        for (Item item : order.getItems()) {
-            if (item.getId() == returnOrder.getItemId()) {
-                item.setStatus("canceled");
-                return;
-            }
-        }
+    public void delete(int id){
+        Order order = findById(id);
+        order.setStatus("canceled");
 
-        throw new IllegalStateException("Item with id " + returnOrder.getItemId() + " not found in order with id " + returnOrder.getOrderId() + ".");
 
     }
 
