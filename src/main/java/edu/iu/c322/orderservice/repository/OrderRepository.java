@@ -1,6 +1,8 @@
 package edu.iu.c322.orderservice.repository;
 
+import edu.iu.c322.orderservice.model.Item;
 import edu.iu.c322.orderservice.model.Order;
+import edu.iu.c322.orderservice.model.Return;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -12,40 +14,55 @@ public class OrderRepository {
 
     public Order findById(int id){
         for(Order order: orders){
-            if (order.getCustomerId()==id){
+            if (order.getOrderId()==id){
                 return order;
             }
         }
-        throw new IllegalStateException("customer id is not valid.");
+        throw new IllegalStateException("order id is not valid.");
     }
 
     public int create(Order order){
+        int id = orders.size() + 1;
+        order.setOrderId(id);
         orders.add(order);
-        return order.getCustomerId();
+        return order.getOrderId();
     }
 
-    public void update(Order order, int id){
-        Order x = getOrderById(id);
-        if (x != null){
-            x.setTotal(order.getTotal());
-            x.setItems(order.getItems());
-            x.setPayment(order.getPayment());
-            x.setShippingAddress(order.getShippingAddress());
-        } else {
-            throw new IllegalStateException("customer id is not valid.");
+    public void update(Return returnOrder){
+        Order order = findById(returnOrder.getOrderId());
+        if (order == null) {
+            throw new IllegalStateException("Order with id " + returnOrder.getOrderId() + " not found.");
         }
+
+        // Find the item with the given id and mark it as returned
+        for (Item item : order.getItems()) {
+            if (item.getId() == returnOrder.getItemId()) {
+                item.setStatus("returned");
+                return;
+            }
+        }
+
+        throw new IllegalStateException("Item with id " + returnOrder.getItemId() + " not found in order with id " + returnOrder.getOrderId() + ".");
+
     }
 
-    public void delete(int id){
-        Order x = getOrderById(id);
-        if (x != null){
-            orders.remove(x);
-        } else {
-            throw new IllegalStateException("customer id is not valid.");
+    public void delete(Return returnOrder){
+        Order order = findById(returnOrder.getOrderId());
+        // Find the item with the given id and mark it as returned
+        for (Item item : order.getItems()) {
+            if (item.getId() == returnOrder.getItemId()) {
+                item.setStatus("canceled");
+                return;
+            }
         }
+
+        throw new IllegalStateException("Item with id " + returnOrder.getItemId() + " not found in order with id " + returnOrder.getOrderId() + ".");
+
     }
+
+
 
     private Order getOrderById(int id) {
-        return orders.stream().filter(x -> x.getCustomerId() == id).findAny().orElse(null);
+        return orders.stream().filter(x -> x.getOrderId() == id).findAny().orElse(null);
     }
 }

@@ -1,26 +1,40 @@
 package edu.iu.c322.orderservice.model;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 import java.util.Objects;
 
+
 public class Order {
     private int customerId;
+    private int orderId;
 
     private double total;
-    private Address shippingAddress;
+    private @Valid Address shippingAddress;
 
-    private List<Item> items;
+    private List<@Valid Item> items;
 
-    private Payment payment;
+    private @Valid Payment payment;
 
     public Order(int customerId, double total, Address shippingAddress, List<Item> items, Payment payment) {
         this.customerId = customerId;
         this.total = total;
         this.shippingAddress = shippingAddress;
         this.items = items;
+        for (int i = 0; i < items.size(); i++){
+            items.get(i).setId(i+1);
+        }
         this.payment = payment;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public int getCustomerId() {
@@ -51,8 +65,12 @@ public class Order {
         return items;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setItems(List<Item> itemGroup) {
+        for (int i = 0; i < itemGroup.size();i++) {
+            Item temp = itemGroup.get(i);
+            temp.setId(i+1);
+            items.add(temp);
+        }
     }
 
     public Payment getPayment() {
@@ -62,6 +80,7 @@ public class Order {
     public void setPayment(Payment payment) {
         this.payment = payment;
     }
+
 
     @Override
     public boolean equals(Object o) {

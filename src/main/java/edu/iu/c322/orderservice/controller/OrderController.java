@@ -1,12 +1,15 @@
 package edu.iu.c322.orderservice.controller;
 
+import edu.iu.c322.orderservice.model.Item;
 import edu.iu.c322.orderservice.model.Order;
+import edu.iu.c322.orderservice.model.Return;
 import edu.iu.c322.orderservice.repository.OrderRepository;
 import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Validated
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -28,13 +31,13 @@ public class OrderController {
     }
 
     // PUT localhost:8080/order/2
-    @PutMapping("/{id}")
-    public void update(@Valid @RequestBody Order order, @PathVariable int id){
-        repository.update(order, id);
+    @PutMapping("/return")
+    public void update(@Valid @RequestBody Return returnOrder){
+       repository.update(returnOrder);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id){
-        repository.delete(id);
+    @DeleteMapping("/return")
+    public void delete(@Valid @RequestBody Return returnOrder){
+        repository.delete(returnOrder);
     }
 }

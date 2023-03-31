@@ -5,15 +5,27 @@ import jakarta.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 public class Item {
+    private int itemId;
     @NotEmpty(message = "item name cannot be empty.")
     private String name;
     private int quantity;
     private int price;
 
+    private String status;
+
     public Item(String name, int quantity, int price) {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
+        this.status = "shipping now";
+    }
+
+    public int getId() {
+        return itemId;
+    }
+
+    public void setId(int id) {
+        this.itemId = id;
     }
 
     public String getName() {
@@ -38,6 +50,15 @@ public class Item {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
