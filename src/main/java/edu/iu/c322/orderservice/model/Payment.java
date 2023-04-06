@@ -1,21 +1,40 @@
 package edu.iu.c322.orderservice.model;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Objects;
-
+@Entity
 public class Payment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     @NotEmpty(message = "method cannot be empty.")
     private String method;
     @NotEmpty(message = "number cannot be empty.")
     private String number;
-    private Address billingAddress;
+    @OneToOne
+    @JoinColumn(name = "billingAddress_id", referencedColumnName = "id")
+    private Address address;
 
-    public Payment(String method, String number, Address billingAddress) {
-        this.method = method;
-        this.number = number;
-        this.billingAddress = billingAddress;
+//    public Payment(String method, String number, Address billingAddress) {
+//        this.method = method;
+//        this.number = number;
+//        this.billingAddress = billingAddress;
+//    }
+
+    @OneToOne(mappedBy="payment")
+    private Order order;
+
+    public int getId() {
+        return id;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
 
     public String getMethod() {
         return method;
@@ -33,12 +52,12 @@ public class Payment {
         this.number = number;
     }
 
-    public Address getBillingAddress() {
-        return billingAddress;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setShippingAddress(Address billingAddress) {
-        this.billingAddress = billingAddress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override
@@ -46,12 +65,12 @@ public class Payment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return method.equals(payment.method) && number.equals(payment.number) && billingAddress.equals(payment.billingAddress);
+        return method.equals(payment.method) && number.equals(payment.number) && address.equals(payment.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(method, number, billingAddress);
+        return Objects.hash(method, number, address);
     }
 
     @Override
@@ -59,7 +78,7 @@ public class Payment {
         return "Payment{" +
                 "method='" + method + '\'' +
                 ", number='" + number + '\'' +
-                ", shippingAddress=" + billingAddress +
+                ", billingAddress=" + address +
                 '}';
     }
 }

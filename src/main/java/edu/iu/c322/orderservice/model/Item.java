@@ -1,10 +1,14 @@
 package edu.iu.c322.orderservice.model;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Objects;
 
+@Entity
 public class Item {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int itemId;
     @NotEmpty(message = "item name cannot be empty.")
     private String name;
@@ -13,12 +17,20 @@ public class Item {
 
     private String status;
 
-    public Item(String name, int quantity, int price) {
-        this.name = name;
-        this.quantity = quantity;
-        this.price = price;
-        this.status = "shipping now";
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    public Item(){
+        status = "shipping now";
     }
+
+//    public Item(String name, int quantity, int price) {
+//        this.name = name;
+//        this.quantity = quantity;
+//        this.price = price;
+//        this.status = "shipping now";
+//    }
 
     public int getId() {
         return itemId;
