@@ -8,22 +8,11 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotEmpty(message = "state cannot be empty.")
-    private String state;
-    @NotEmpty(message = "city cannot be empty.")
-    private String city;
 
+    private String state;
+    private String city;
     private int postalCode;
 
-    @OneToOne(mappedBy="address")
-    private Order order;
-
-
-//    public Address(String state, String city, int postalCode) {
-//        this.state = state;
-//        this.city = city;
-//        this.postalCode = postalCode;
-//    }
 
     public int getId() {
         return id;
@@ -55,27 +44,5 @@ public class Address {
 
     public void setPostalCode(int postalCode) {
         this.postalCode = postalCode;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Address that = (Address) o;
-        return postalCode == that.postalCode && state.equals(that.state) && city.equals(that.city);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(state, city, postalCode);
-    }
-
-    @Override
-    public String toString() {
-        return "ShippingAddress{" +
-                "state='" + state + '\'' +
-                ", city='" + city + '\'' +
-                ", postalCode=" + postalCode +
-                '}';
     }
 }

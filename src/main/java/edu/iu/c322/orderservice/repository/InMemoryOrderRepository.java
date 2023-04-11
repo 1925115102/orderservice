@@ -28,30 +28,30 @@ public class InMemoryOrderRepository {
         return order.getId();
     }
 
-    public void update(Return returnOrder){
-        Order order = findById(returnOrder.getOrderId());
-        if (order == null) {
-            throw new IllegalStateException("Order with id " + returnOrder.getOrderId() + " not found.");
-        }
-
-        // Find the item with the given id and mark it as returned
-        for (Item item : order.getItems()) {
-            if (item.getId() == returnOrder.getItemId()) {
-                item.setStatus("returned");
-                return;
-            }
-        }
-
-        throw new IllegalStateException("Item with id " + returnOrder.getItemId() + " not found in order with id " + returnOrder.getOrderId() + ".");
-
-    }
-
-    public void delete(int id){
-        Order order = findById(id);
-        order.setStatus("canceled");
-
-
-    }
+//    public void update(Return returnOrder){
+//        Order order = findById(returnOrder.getOrderId());
+//        if (order == null) {
+//            throw new IllegalStateException("Order with id " + returnOrder.getOrderId() + " not found.");
+//        }
+//
+//        // Find the item with the given id and mark it as returned
+//        for (Item item : order.getItems()) {
+//            if (item.getId() == returnOrder.getItemId()) {
+//                item.setStatus("returned");
+//                return;
+//            }
+//        }
+//
+//        throw new IllegalStateException("Item with id " + returnOrder.getItemId() + " not found in order with id " + returnOrder.getOrderId() + ".");
+//
+//    }
+//
+//    public void delete(int id){
+//        Order order = findById(id);
+//        order.setStatus("canceled");
+//
+//
+//    }
 
 
 

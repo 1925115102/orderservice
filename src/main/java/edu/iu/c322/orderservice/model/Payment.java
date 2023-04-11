@@ -9,22 +9,18 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotEmpty(message = "method cannot be empty.")
+
     private String method;
-    @NotEmpty(message = "number cannot be empty.")
+
     private String number;
-    @OneToOne
-    @JoinColumn(name = "billingAddress_id", referencedColumnName = "id")
-    private Address address;
 
-//    public Payment(String method, String number, Address billingAddress) {
-//        this.method = method;
-//        this.number = number;
-//        this.billingAddress = billingAddress;
-//    }
 
-    @OneToOne(mappedBy="payment")
-    private Order order;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address billingAddress;
+
+
+
 
     public int getId() {
         return id;
@@ -52,33 +48,11 @@ public class Payment {
         this.number = number;
     }
 
-    public Address getAddress() {
-        return address;
+    public Address getBillingAddress() {
+        return billingAddress;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Payment payment = (Payment) o;
-        return method.equals(payment.method) && number.equals(payment.number) && address.equals(payment.address);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(method, number, address);
-    }
-
-    @Override
-    public String toString() {
-        return "Payment{" +
-                "method='" + method + '\'' +
-                ", number='" + number + '\'' +
-                ", billingAddress=" + address +
-                '}';
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
     }
 }

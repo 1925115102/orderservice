@@ -10,42 +10,33 @@ import java.util.Objects;
 
 @Entity
 public class Order {
-    private int customerId;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    private int customerId;
+    private float total;
 
-    private double total;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address shippingAddress;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<Item> items;
 
-    @OneToOne
-    @JoinColumn(name = "shippingAddress_id", referencedColumnName = "id")
-    private @Valid Address address;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
 
-    @OneToMany(mappedBy = "order")
-    private List<@Valid Item> items;
-
-    @OneToOne
-    @JoinColumn(name = "payment_id", referencedColumnName = "id")
-    private @Valid Payment payment;
-    private String status;
-
-    public Order(){
-        this.status = "ordered";
+    public void addOrderItem(Item item){
+        items.add(item);
+        item.setOrder(this);
     }
 
-//    public Order(int customerId, double total, Address shippingAddress, List<Item> items, Payment payment) {
-//        this.customerId = customerId;
-//        this.total = total;
-//        this.shippingAddress = shippingAddress;
-//        this.items = items;
-//        for (int i = 0; i < items.size(); i++){
-//            items.get(i).setId(i+1);
-//        }
-//        this.payment = payment;
-//        this.status = "ordered";
-//    }
+    public void removeOrderItem(Item item){
+        items.remove(item);
+        item.setOrder(null);
+    }
 
-
+    // getters and setters
     public int getId() {
         return id;
     }
@@ -62,20 +53,20 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public double getTotal() {
+    public float getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(float total) {
         this.total = total;
     }
 
-    public Address getAddress() {
-        return address;
+    public Address getShippingAddress() {
+        return shippingAddress;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 
     public List<Item> getItems() {
@@ -83,20 +74,7 @@ public class Order {
     }
 
     public void setItems(List<Item> items) {
-        this.items = new ArrayList<>();
-        for (int i = 0; i < items.size();i++) {
-            Item temp = items.get(i);
-            temp.setId(i+1);
-            items.add(temp);
-        }
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+        this.items = items;
     }
 
     public Payment getPayment() {
@@ -105,19 +83,5 @@ public class Order {
 
     public void setPayment(Payment payment) {
         this.payment = payment;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
-        return customerId == order.customerId && Double.compare(order.total, total) == 0 && address.equals(order.address) && items.equals(order.items) && payment.equals(order.payment);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(customerId, total, address, items, payment);
     }
 }
