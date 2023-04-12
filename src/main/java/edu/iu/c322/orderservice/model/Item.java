@@ -21,6 +21,12 @@ public class Item {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    private String status;
+
+    public Item(){
+        status = "ordered";
+    }
+
     public int getId() {
         return id;
     }
@@ -59,5 +65,13 @@ public class Item {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

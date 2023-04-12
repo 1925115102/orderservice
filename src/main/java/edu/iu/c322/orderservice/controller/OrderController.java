@@ -4,6 +4,7 @@ import edu.iu.c322.orderservice.model.Item;
 import edu.iu.c322.orderservice.model.Order;
 import edu.iu.c322.orderservice.repository.OrderRepository;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
@@ -19,6 +20,30 @@ public class OrderController {
 
     public OrderController(OrderRepository repository) {
         this.repository = repository;
+    }
+
+    @PutMapping("/order/{orderId}")
+    public ResponseEntity<Order> updateOrder(@PathVariable int orderId, @RequestBody Order updatedOrder) {
+        // code to update the order
+        return ResponseEntity.ok(updatedOrder);
+    }
+
+    @PutMapping("/{orderId}")
+    public void updateOrder(@RequestBody Order updatedOrder, @PathVariable int orderId) {
+        Order existingOrder = repository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found with id " + orderId));
+
+        // set the order ID to match the path variable
+        updatedOrder.setId(orderId);
+
+        // update the items in the order
+        for (int i = 0; i < updatedOrder.getItems().size(); i++) {
+            Item item = updatedOrder.getItems().get(i);
+            item.setOrder(updatedOrder);
+        }
+
+        // save the updated order
+        repository.save(updatedOrder);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
