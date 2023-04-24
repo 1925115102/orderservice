@@ -68,4 +68,9 @@ public class OrderController {
         return repository.findById(orderId);
     }
 
+    @GetMapping("/findAll")
+    public List<Order> findAll(){return repository.findAll();}
+
+    @GetMapping("/about")
+    public String about(){return "Jingwen Pang \n This is the website for order service";}
 }
