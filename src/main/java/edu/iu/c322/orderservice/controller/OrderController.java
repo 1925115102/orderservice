@@ -13,6 +13,7 @@ import java.util.Optional;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/orders")
 public class OrderController {
 
@@ -47,7 +48,7 @@ public class OrderController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+    @PostMapping("/create")
     public int create(@RequestBody Order order){
 
         for(int i = 0; i < order.getItems().size(); i++){
@@ -71,6 +72,4 @@ public class OrderController {
     @GetMapping("/findAll")
     public List<Order> findAll(){return repository.findAll();}
 
-    @GetMapping("/about")
-    public String about(){return "Jingwen Pang \n This is the website for order service";}
 }
